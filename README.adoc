@@ -1,0 +1,112 @@
+= AffineScript Playground
+:toc: macro
+:icons: font
+
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+image:https://img.shields.io/badge/Language-AffineScript-cyan[AffineScript]
+image:https://img.shields.io/badge/Types-Affine-purple[Affine Types]
+image:https://img.shields.io/badge/Target-WebAssembly-black[WASM]
+image:https://img.shields.io/badge/License-AGPL--3.0-blue[License]
+
+*Playground for AffineScript - Affine Types for WebAssembly*
+
+toc::[]
+
+== Overview
+
+AffineScript brings affine type semantics to WebAssembly, ensuring resources are used at most once while maintaining high performance for web applications.
+
+=== Key Features
+
+* **Affine Types**: Use resources at most once
+* **WebAssembly Target**: Compiles to efficient WASM
+* **JavaScript Interop**: Seamless JS/TS integration
+* **Zero Runtime Overhead**: Types erased at compile time
+
+== Affine vs Linear Types
+
+[cols="1,2,2"]
+|===
+| Type System | Resource Usage | Behavior
+
+| **Affine** (AffineScript)
+| At most once
+| Can drop without use
+
+| **Linear** (Ephapax)
+| Exactly once
+| Must use, cannot drop
+|===
+
+== Language Design
+
+=== Affine Resources
+
+[source,affinescript]
+----
+-- Affine type: can be used 0 or 1 time
+type Handle = affine {
+    ptr: WasmPtr,
+}
+
+fn example():
+    let h = acquire_handle()
+    -- Can use h once:
+    use_handle(h)
+    -- Or drop without use (affine allows this):
+    -- (h goes out of scope, auto-dropped)
+----
+
+=== WASM Compilation
+
+[source,affinescript]
+----
+-- Compile to WebAssembly
+@wasm_export
+fn add(a: i32, b: i32) -> i32:
+    a + b
+
+-- Import from JavaScript
+@wasm_import("console", "log")
+fn js_log(msg: String) -> ()
+----
+
+=== JavaScript Integration
+
+[source,javascript]
+----
+// Using AffineScript from JavaScript
+import { init } from './app.wasm';
+
+const wasm = await init();
+const result = wasm.add(1, 2);
+console.log(result); // 3
+----
+
+== Getting Started
+
+[source,bash]
+----
+# Install
+guix install affinescript
+
+# Compile to WASM
+affinescript build --target=wasm32 app.afs
+
+# Run in browser or Node.js
+----
+
+== Examples
+
+* `wasm/` - WebAssembly examples
+* `interop/` - JS interoperability
+* `resources/` - Affine resource management
+
+== Related
+
+* **Ephapax** - Sibling language with linear types
+
+== License
+
+SPDX-License-Identifier: AGPL-3.0-or-later
