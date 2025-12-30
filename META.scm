@@ -10,7 +10,17 @@
           (date . "2025-12-30")
           (context . "Need affine type semantics for WebAssembly resource management")
           (decision . "Implement affine types with at-most-once usage semantics")
-          (consequences . "Resources can be dropped without use, simpler than linear types")))))
+          (consequences . "Resources can be dropped without use, simpler than linear types")))
+       (adr-002
+         ((status . "accepted")
+          (date . "2025-12-30")
+          (title . "Hyperpolymath Language Policy")
+          (context . "Consistent language stack across all repositories")
+          (decision . "Use ReScript (not TypeScript), Deno (not npm/Node), Rust (not Go/Python)")
+          (consequences . ("Type safety via ReScript"
+                           "No npm dependencies"
+                           "Performance via Rust"
+                           "Python only for SaltStack"))))))
     (development-practices
       ((code-style . "ocaml-standard")
        (security . "openssf-scorecard")
