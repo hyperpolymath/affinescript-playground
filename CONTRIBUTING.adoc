@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+= Contributing to AffineScript Playground
+
+== Getting Started
+
+1. Fork the repository
+2. Create a feature branch from `main`
+3. Sign off commits (`git commit -s`)
+4. Submit a pull request
+
+== Development Setup
+
+[source,bash]
+----
+# Clone and enter directory
+git clone https://github.com/hyperpolymath/affinescript-playground.git
+cd affinescript-playground
+
+# Install dependencies (Deno required per RSR)
+deno task dev
+
+# Run tests
+just test
+----
+
+== Commit Guidelines
+
+* Conventional commits: `type(scope): description`
+* Sign all commits (DCO required)
+* Atomic, focused commits
+
+== Code Style
+
+* ReScript for application logic (per RSR Language Policy)
+* Deno for runtime (not Node/npm/bun per RSR)
+* Descriptive variable names (annotated)
+* No TypeScript - use ReScript instead
+
+== Affine Type Guidelines
+
+When working with affine types:
+
+* Ensure resources are used at most once
+* Document ownership transfer clearly
+* Test for resource leak prevention
+* Verify WASM output for correctness
+
+== Testing
+
+[source,bash]
+----
+# Run all tests
+just test
+
+# Check affine type safety
+just check-affine
+
+# Analyze WASM output
+just analyze-wasm
+----
+
+== License
+
+Contributions licensed under AGPL-3.0-or-later.

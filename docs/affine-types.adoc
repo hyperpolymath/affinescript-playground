@@ -1,0 +1,126 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+= Affine Types in AffineScript
+:toc:
+:icons: font
+
+== Introduction
+
+Affine types are a form of substructural type system where values can be used *at most once*. This is in contrast to:
+
+* **Linear types**: Must be used *exactly once*
+* **Relevant types**: Must be used *at least once*
+* **Unrestricted types**: Can be used any number of times
+
+== Why Affine Types?
+
+=== Memory Safety Without GC
+
+Affine types provide memory safety guarantees without runtime garbage collection:
+
+[source,affinescript]
+----
+type Buffer = affine {
+    ptr: WasmPtr,
+    len: u32,
+}
+
+fn safe_buffer_usage():
+    let buf = allocate(1024)
+    write_to(buf, "hello")  -- buf consumed here
+    -- buf cannot be used again - no use-after-free possible
+----
+
+=== Resource Management
+
+File handles, network connections, and other resources naturally fit affine semantics:
+
+[source,affinescript]
+----
+type FileHandle = affine {
+    fd: i32,
+}
+
+fn read_file(path: String) -> String:
+    let handle = open(path)     -- Returns affine FileHandle
+    let contents = read(handle) -- Consumes handle
+    contents                    -- handle automatically closed
+----
+
+=== WebAssembly Integration
+
+WASM's linear memory model benefits from affine ownership:
+
+[source,affinescript]
+----
+@wasm_export
+fn process_buffer(ptr: i32, len: i32) -> i32:
+    let buf = AffineBuffer.from_raw(ptr, len)
+    let result = transform(buf)  -- buf consumed
+    result.as_ptr()              -- Return new pointer
+----
+
+== Affine vs Linear Types
+
+|===
+| Aspect | Affine | Linear
+
+| Usage count
+| 0 or 1
+| Exactly 1
+
+| Can drop unused
+| Yes
+| No
+
+| Example
+| Optional cleanup
+| Guaranteed cleanup
+
+| AffineScript
+| Default type qualifier
+| Explicit `linear` keyword
+|===
+
+== Implementation
+
+=== Type System Rules
+
+1. **Move semantics**: Assignment moves ownership
+2. **No implicit copy**: Copying requires explicit clone
+3. **Drop allowed**: Unused values are safely dropped
+4. **Borrow checking**: References track ownership
+
+=== Example Implementation
+
+[source,typescript]
+----
+class AffineResource<T> {
+  private consumed = false;
+  private readonly value: T;
+
+  consume(): T {
+    if (this.consumed) {
+      throw new Error('Affine type violation');
+    }
+    this.consumed = true;
+    return this.value;
+  }
+
+  drop(): void {
+    this.consumed = true;  // Affine allows this
+  }
+}
+----
+
+== Best Practices
+
+1. **Document ownership transfer** in function signatures
+2. **Use affine types for resources** that need cleanup
+3. **Test for violations** with property-based testing
+4. **Prefer affine over linear** unless guaranteed use is required
+
+== Further Reading
+
+* link:https://en.wikipedia.org/wiki/Substructural_type_system[Substructural Type Systems]
+* link:https://www.rust-lang.org/[Rust's Ownership Model] (similar concepts)
+* link:../examples/affine-types.ts[Affine Types Example]

@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# RFC 9116 - Security.txt
+
+Contact: mailto:hyperpolymath@proton.me
+Contact: https://github.com/hyperpolymath/affinescript-playground/security/advisories/new
+Expires: 2026-12-31T23:59:59.000Z
+Encryption: https://keys.openpgp.org/search?q=hyperpolymath@proton.me
+Preferred-Languages: en
+Canonical: https://github.com/hyperpolymath/affinescript-playground/.well-known/security.txt
+Policy: https://github.com/hyperpolymath/affinescript-playground/blob/main/SECURITY.md

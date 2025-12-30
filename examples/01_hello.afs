@@ -1,0 +1,19 @@
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+-- AffineScript Hello World Example
+
+-- Simple WebAssembly export
+@wasm_export
+fn add(a: i32, b: i32) -> i32:
+    a + b
+
+-- Affine resource example
+type Handle = affine {
+    ptr: WasmPtr,
+}
+
+fn main():
+    let result = add(1, 2)
+    -- Handle is affine: can be used 0 or 1 time
+    let h = acquire_handle()
+    use_handle(h)  -- h consumed here
+    -- h cannot be used again (affine semantics)
