@@ -1,4 +1,8 @@
 = AffineScript Playground
+
+image:https://img.shields.io/badge/License-MPL_2.0-blue.svg[MPL-2.0,link="https://opensource.org/licenses/MPL-2.0"]
+image:https://img.shields.io/badge/Philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
+
 :toc: macro
 :icons: font
 
@@ -7,7 +11,6 @@
 image:https://img.shields.io/badge/Language-AffineScript-cyan[AffineScript]
 image:https://img.shields.io/badge/Types-Affine-purple[Affine Types]
 image:https://img.shields.io/badge/Target-WebAssembly-black[WASM]
-image:https://img.shields.io/badge/License-AGPL--3.0-blue[License]
 
 *Playground for AffineScript - Affine Types for WebAssembly*
 
