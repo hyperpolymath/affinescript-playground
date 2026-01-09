@@ -4,7 +4,7 @@
 // Tests for Affine Type Implementation
 
 import { assertEquals, assertThrows } from '@std/assert';
-import { AffineResource, allocateWasmMemory } from '../src/main.ts';
+import { AffineResource, allocateWasmMemory } from '../src/run.js';
 
 Deno.test('AffineResource - can consume once', () => {
   const resource = new AffineResource(42);

@@ -3,7 +3,7 @@
 //
 // Example: WebAssembly Interop with Affine Types
 
-import { AffineResource } from '../src/main.ts';
+import { AffineResource } from '../src/run.js';
 
 /**
  * Example: WebAssembly Memory Management with Affine Semantics
@@ -14,15 +14,20 @@ import { AffineResource } from '../src/main.ts';
  * - Clear ownership semantics
  */
 
-interface WasmBuffer {
-  readonly memory: Uint8Array;
-  readonly offset: number;
-  readonly length: number;
-}
+/**
+ * @typedef {Object} WasmBuffer
+ * @property {Uint8Array} memory - The underlying memory buffer
+ * @property {number} offset - Offset within the memory
+ * @property {number} length - Length of the buffer
+ */
 
-// Simulated WASM memory allocation
-function wasmAlloc(size: number): AffineResource<WasmBuffer> {
-  const buffer: WasmBuffer = {
+/**
+ * Allocate WASM memory with affine semantics
+ * @param {number} size - Size in bytes to allocate
+ * @returns {AffineResource} Affine resource wrapping the buffer
+ */
+function wasmAlloc(size) {
+  const buffer = {
     memory: new Uint8Array(size),
     offset: 0,
     length: size,
@@ -31,26 +36,35 @@ function wasmAlloc(size: number): AffineResource<WasmBuffer> {
   return new AffineResource(buffer);
 }
 
-// Write to WASM buffer (consumes ownership)
-function wasmWrite(resource: AffineResource<WasmBuffer>, data: Uint8Array): void {
+/**
+ * Write to WASM buffer (consumes ownership)
+ * @param {AffineResource} resource - Affine buffer resource
+ * @param {Uint8Array} data - Data to write
+ */
+function wasmWrite(resource, data) {
   const buffer = resource.consume();
   buffer.memory.set(data);
   console.log(`WASM: Wrote ${data.length} bytes to buffer`);
 }
 
-// Read from WASM buffer and return copy (consumes ownership)
-function wasmRead(resource: AffineResource<WasmBuffer>): Uint8Array {
+/**
+ * Read from WASM buffer and return copy (consumes ownership)
+ * @param {AffineResource} resource - Affine buffer resource
+ * @returns {Uint8Array} Copy of the buffer data
+ */
+function wasmRead(resource) {
   const buffer = resource.consume();
   const copy = new Uint8Array(buffer.memory);
   console.log(`WASM: Read ${buffer.length} bytes from buffer`);
   return copy;
 }
 
-// Transfer ownership to another buffer
-function wasmTransfer(
-  source: AffineResource<WasmBuffer>,
-  dest: AffineResource<WasmBuffer>
-): void {
+/**
+ * Transfer ownership between buffers
+ * @param {AffineResource} source - Source buffer (consumed)
+ * @param {AffineResource} dest - Destination buffer (consumed)
+ */
+function wasmTransfer(source, dest) {
   const src = source.consume();
   const dst = dest.consume();
   dst.memory.set(src.memory);
@@ -89,7 +103,7 @@ wasmRead(buf3);
 try {
   wasmRead(buf3); // This will throw!
 } catch (e) {
-  console.log(`   Error caught: ${(e as Error).message}`);
+  console.log(`   Error caught: ${e.message}`);
 }
 console.log('');
 
