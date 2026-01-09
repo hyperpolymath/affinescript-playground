@@ -92,22 +92,26 @@ fn process_buffer(ptr: i32, len: i32) -> i32:
 
 === Example Implementation
 
-[source,typescript]
+[source,javascript]
 ----
-class AffineResource<T> {
-  private consumed = false;
-  private readonly value: T;
+class AffineResource {
+  #consumed = false;
+  #resourceValue;
 
-  consume(): T {
-    if (this.consumed) {
-      throw new Error('Affine type violation');
-    }
-    this.consumed = true;
-    return this.value;
+  constructor(value) {
+    this.#resourceValue = value;
   }
 
-  drop(): void {
-    this.consumed = true;  // Affine allows this
+  consume() {
+    if (this.#consumed) {
+      throw new Error('Affine type violation');
+    }
+    this.#consumed = true;
+    return this.#resourceValue;
+  }
+
+  drop() {
+    this.#consumed = true;  // Affine allows this
   }
 }
 ----
@@ -123,4 +127,4 @@ class AffineResource<T> {
 
 * link:https://en.wikipedia.org/wiki/Substructural_type_system[Substructural Type Systems]
 * link:https://www.rust-lang.org/[Rust's Ownership Model] (similar concepts)
-* link:../examples/affine-types.ts[Affine Types Example]
+* link:../examples/affine-types.js[Affine Types Example]

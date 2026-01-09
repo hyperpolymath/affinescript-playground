@@ -67,12 +67,12 @@ docs:
 # Run affine types example
 example-affine:
     @echo "Running affine types example..."
-    deno run --allow-read examples/affine-types.ts
+    deno run --allow-read examples/affine-types.js
 
 # Run WASM interop example
 example-wasm:
     @echo "Running WASM interop example..."
-    deno run --allow-read examples/wasm-interop.ts
+    deno run --allow-read examples/wasm-interop.js
 
 # === RSR Compliance ===
 
@@ -85,7 +85,7 @@ rsr-check:
     @test -f SECURITY.md && echo "  ✓ SECURITY.md" || echo "  ✗ SECURITY.md"
     @test -f CODE_OF_CONDUCT.md && echo "  ✓ CODE_OF_CONDUCT.md" || echo "  ✗ CODE_OF_CONDUCT.md"
     @test -f CONTRIBUTING.adoc && echo "  ✓ CONTRIBUTING.adoc" || echo "  ✗ CONTRIBUTING.adoc"
-    @test -f CHANGELOG.md && echo "  ✓ CHANGELOG.md" || echo "  ✗ CHANGELOG.md"
+    @test -f CHANGELOG.adoc && echo "  ✓ CHANGELOG.adoc" || echo "  ✗ CHANGELOG.adoc"
     @test -f deno.json && echo "  ✓ deno.json (Deno runtime)" || echo "  ✗ deno.json"
     @test -f rescript.json && echo "  ✓ rescript.json (ReScript)" || echo "  ✗ rescript.json"
     @test -f Mustfile && echo "  ✓ Mustfile" || echo "  ✗ Mustfile"
@@ -119,10 +119,10 @@ stats:
     @echo "=== Project Statistics ==="
     @echo ""
     @echo "Source files:"
-    @find src/ -name '*.res' -o -name '*.ts' 2>/dev/null | wc -l || echo "0"
+    @find src/ -name '*.res' -o -name '*.js' 2>/dev/null | wc -l || echo "0"
     @echo ""
     @echo "Test files:"
-    @find test/ -name '*_test.res' -o -name '*_test.ts' 2>/dev/null | wc -l || echo "0"
+    @find test/ -name '*_test.res' -o -name '*_test.js' 2>/dev/null | wc -l || echo "0"
     @echo ""
     @echo "Examples:"
     @find examples/ -type f 2>/dev/null | wc -l || echo "0"

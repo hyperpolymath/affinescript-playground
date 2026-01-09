@@ -5,9 +5,10 @@
     "build": "deno run -A npm:rescript build",
     "clean": "deno run -A npm:rescript clean",
     "dev": "deno run --watch src/run.js",
-    "test": "deno test --allow-read",
+    "test": "deno test --allow-read test/",
     "lint": "deno lint",
     "fmt": "deno fmt",
+    "check": "deno lint && deno fmt --check && deno test --allow-read test/",
     "demo": "deno run src/run.js",
     "build:wasm": "deno task compile --target wasm32-unknown-unknown"
   },

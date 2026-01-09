@@ -3,7 +3,7 @@
 //
 // Example: Affine Types for Resource Management
 
-import { AffineResource } from '../src/main.ts';
+import { AffineResource } from '../src/run.js';
 
 /**
  * Example: File Handle with Affine Semantics
@@ -14,14 +14,21 @@ import { AffineResource } from '../src/main.ts';
  * - Properly closed (or safely dropped)
  */
 
-interface FileHandle {
-  readonly fd: number;
-  readonly path: string;
-  readonly mode: 'read' | 'write';
-}
+/**
+ * @typedef {Object} FileHandle
+ * @property {number} fd - File descriptor
+ * @property {string} path - File path
+ * @property {'read' | 'write'} mode - File mode
+ */
 
-function openFileAffine(path: string, mode: 'read' | 'write'): AffineResource<FileHandle> {
-  const handle: FileHandle = {
+/**
+ * Open a file with affine semantics
+ * @param {string} path - File path to open
+ * @param {'read' | 'write'} mode - File mode
+ * @returns {AffineResource} Affine resource wrapping the file handle
+ */
+function openFileAffine(path, mode) {
+  const handle = {
     fd: Math.floor(Math.random() * 1000),
     path,
     mode,
@@ -30,7 +37,12 @@ function openFileAffine(path: string, mode: 'read' | 'write'): AffineResource<Fi
   return new AffineResource(handle);
 }
 
-function readFile(resource: AffineResource<FileHandle>): string {
+/**
+ * Read from a file (consumes the resource)
+ * @param {AffineResource} resource - Affine file resource
+ * @returns {string} File contents
+ */
+function readFile(resource) {
   const handle = resource.consume();
   if (handle.mode !== 'read') {
     throw new Error('File not opened for reading');
@@ -39,7 +51,12 @@ function readFile(resource: AffineResource<FileHandle>): string {
   return `Contents of ${handle.path}`;
 }
 
-function writeFile(resource: AffineResource<FileHandle>, data: string): void {
+/**
+ * Write to a file (consumes the resource)
+ * @param {AffineResource} resource - Affine file resource
+ * @param {string} data - Data to write
+ */
+function writeFile(resource, data) {
   const handle = resource.consume();
   if (handle.mode !== 'write') {
     throw new Error('File not opened for writing');
