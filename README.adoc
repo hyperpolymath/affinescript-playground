@@ -18,6 +18,8 @@ image:https://img.shields.io/badge/Target-WebAssembly-black[WASM]
 
 *Playground for AffineScript - Affine Types for WebAssembly*
 
+**📖 New to this repository?** See link:NAVIGATION.adoc[Navigation Guide] for directory structure and quick links.
+
 toc::[]
 
 == Overview

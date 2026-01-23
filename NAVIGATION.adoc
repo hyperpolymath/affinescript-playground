@@ -1,0 +1,174 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-FileCopyrightText: 2024-2026 Hyperpolymath Contributors
+
+= AffineScript Playground Repository Navigation Guide
+
+This guide helps you navigate the AffineScript Playground repository structure.
+
+== Quick Start Files (Root Level)
+
+[cols="1,3"]
+|===
+|File/Directory |Purpose
+
+|**README.adoc** |Project overview and quick start
+|**LICENSE** |PMPL-1.0-or-later license text
+|**STATE.scm** |Current project state (symlink)
+|**META.scm** |Architecture decisions (symlink)
+|**ECOSYSTEM.scm** |Ecosystem context (symlink)
+|===
+
+== Source Code
+
+[cols="1,3"]
+|===
+|Directory |Contents
+
+|**src/** |Source code (ReScript/Deno playground code)
+|**test/** |Test suites
+|**examples/** |Example programs and demonstrations
+|**scripts/** |Utility scripts
+|===
+
+== Documentation
+
+[cols="1,3"]
+|===
+|Directory |Contents
+
+|**docs/governance/** |Community and contribution docs
+|**docs/guides/** |Usage guides and tutorials
+|===
+
+**Governance documents:**
+
+* link:docs/governance/CODE_OF_CONDUCT.md[Code of Conduct] - Community standards
+* link:docs/governance/CONTRIBUTING.adoc[Contributing Guide] - How to contribute
+* link:docs/governance/MAINTAINERS.adoc[Maintainers] - Project maintainers
+* link:docs/governance/SECURITY.md[Security Policy] - Reporting vulnerabilities
+* link:docs/governance/CHANGELOG.adoc[Changelog] - Version history
+* link:docs/governance/PALIMPSEST.adoc[Palimpsest Integration] - License integration
+
+== Build System
+
+[cols="1,3"]
+|===
+|Directory |Contents
+
+|**.build/** |Build configuration and tooling
+|**.build/Justfile** |Task automation (build, test, run)
+|**.build/deno.json** |Deno configuration
+|**.build/rescript.json** |ReScript configuration
+|**.build/Mustfile** |Must-use file enforcement
+|===
+
+== Project Metadata
+
+[cols="1,3"]
+|===
+|File/Directory |Purpose
+
+|**STATE.scm** |Current project state (symlink to .machine_readable/)
+|**META.scm** |Architecture decisions (symlink to .machine_readable/)
+|**ECOSYSTEM.scm** |Ecosystem context (symlink to .machine_readable/)
+|**.machine_readable/** |Structured metadata for tooling (SCM files)
+|**.claude/** |AI assistant context and instructions
+|**hooks/** |Git hooks for development workflow
+|===
+
+== Hidden Directories
+
+[cols="1,3"]
+|===
+|Directory |Purpose
+
+|**.build/** |Build configuration files
+|**.claude/** |AI assistant instructions
+|**.machine_readable/** |Machine-readable SCM metadata
+|**.github/** |GitHub Actions workflows
+|**.githooks/** |Git hooks
+|**.well-known/** |Well-known URIs (security.txt, etc.)
+|===
+
+== Common Tasks
+
+=== Running the Playground
+
+[source,bash]
+----
+cd .build/
+just run             # Run playground
+just dev             # Development mode with watch
+----
+
+=== Building
+
+[source,bash]
+----
+cd .build/
+just build           # Build all
+just build-rescript  # Build ReScript only
+----
+
+=== Testing
+
+[source,bash]
+----
+cd .build/
+just test            # Run all tests
+deno test            # Run Deno tests directly
+----
+
+=== Contributing
+
+1. Read link:docs/governance/CONTRIBUTING.adoc[Contributing Guide]
+2. Check link:docs/governance/CODE_OF_CONDUCT.md[Code of Conduct]
+3. Review link:docs/governance/CHANGELOG.adoc[Changelog] for recent changes
+
+== Directory Tree Overview
+
+[source]
+----
+affinescript-playground/
+├── README.adoc                    # Start here
+├── NAVIGATION.adoc                # This file
+├── LICENSE                        # Legal terms
+├── STATE.scm                      # Project state
+├── META.scm                       # Architecture decisions
+├── ECOSYSTEM.scm                  # Ecosystem context
+│
+├── src/                           # Source code
+├── test/                          # Test suites
+├── examples/                      # Example programs
+├── scripts/                       # Utility scripts
+│
+├── docs/                          # Documentation
+│   ├── governance/                # Community docs
+│   └── guides/                    # Usage guides
+│
+├── .build/                        # Build system
+│   ├── Justfile                   # Task runner
+│   ├── deno.json                  # Deno config
+│   ├── rescript.json              # ReScript config
+│   └── Mustfile                   # Enforcement
+│
+├── hooks/                         # Git hooks
+└── .machine_readable/             # Machine metadata
+----
+
+== Getting Help
+
+* **Issues**: https://github.com/hyperpolymath/affinescript-playground/issues
+* **Discussions**: https://github.com/hyperpolymath/affinescript-playground/discussions
+* **Security**: See link:docs/governance/SECURITY.md[Security Policy]
+
+== Document Conventions
+
+* **`.adoc`** - AsciiDoc format (preferred for complex docs)
+* **`.md`** - Markdown format (for GitHub compatibility)
+* **`.scm`** - Guile Scheme (machine-readable metadata)
+* **`.res`** - ReScript source code
+
+---
+
+**Last updated:** 2026-01-23
